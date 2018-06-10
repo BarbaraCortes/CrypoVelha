@@ -15,14 +15,23 @@
 class Client {
 public:
 	int sock;
-	std::string ip;
 	int port;
+	std::string ip;
 	struct sockaddr_in servAddress;
 	
+	/* Construtor de um cliente */
 	Client(std::string ip, int port);
-	int createConnection(); //retorna se houve erro
+
+	/* Cria uma conexao e retorna se houve erro */ 
+	int createConnection(); 
+
+	/* Recebe um mensagem do servidor e a retorna */
 	std::string receiveMessage();
+
+	/* Envia uma mensagem ao servidor e retorna se houve erro */
 	int sendMessage(std::string msg);
+
+	/* Destrutor de um cliente */
 	~Client();
 };
 

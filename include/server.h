@@ -21,11 +21,19 @@ public:
 	int sock;
 	std::vector<int> clients;
 	
+	/* Construtor de um servidor */
 	Server(int nClients, int port);
-	void waitConnections();
-	std::string receiveMessage(int id); // id do socket
-	int sendMessage(int id, std::string msg); // envia mensagem para o player (id)
 
+	/* Espera pela conexao de clientes */
+	void waitConnections();
+
+	/* Recebe uma mensagem do cliente e a retorna */
+	std::string receiveMessage(int id); // id do socket
+
+	/* Envia uma mensagem para o player [id] e retorna se houve erro */
+	int sendMessage(int id, std::string msg); 
+
+	/* Destrutor de um servidor */
 	~Server();
 };
 
