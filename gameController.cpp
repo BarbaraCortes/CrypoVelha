@@ -1,5 +1,8 @@
+#include <cassert>
+#include <sstream>
+#include <iostream>
+
 #include "include/gameController.h"
-#include <assert.h>
 
 enum{
 	NADA = '0',
@@ -68,8 +71,12 @@ std::string GameController::getControlPackage(int toPlayer){
 			else state = GANHOU;
 		}
 	}
+	
+	std::ostringstream ss;
+	ss << "C";
+	ss << pos << state;
 
-	return "C" + pos + state;
+	return ss.str();
 }
 
 bool GameController::isTurn(int p) {

@@ -50,6 +50,8 @@ struct State {
 			statusLabel->setCoordinates(0.0, 0.92, 1.0, 0.08);
 
 			toAddObjects.emplace_back(statusLabel);
+		} else {
+			setNextScreen(SCREEN_GAME);
 		}
 	}
 
@@ -115,7 +117,7 @@ struct State {
 				objects.emplace_back(gameBoard);
 				break;
 		}
-	};
+	}
 
 	void onMouseMoved(GLint x, GLint y) {
 		mouseX = x / (1.0 * screenW);
@@ -175,6 +177,7 @@ struct State {
 			std::string msg = client->receiveMessage();
 			if (!msg.empty()) {
 				std::cout << msg << std::endl;
+				std::cout << msg.size() << std::endl;
 				
 				client->sendMessage("quit");
 			}

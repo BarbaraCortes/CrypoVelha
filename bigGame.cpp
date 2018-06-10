@@ -5,7 +5,7 @@
 BigGame::BigGame() {
 	// o primeiro jogador devera jogar em um game definido aleatoriamente
 	srand(time(NULL));
-	curGame = std::make_pair(rand()%8, rand()%8);
+	curGame = std::make_pair(rand()%3, rand()%3);
 }
 
 int BigGame::checkWin() {
@@ -88,7 +88,7 @@ std::string BigGame::completeGame() {
 	
 	for(int i = 0; i < 3; ++i) {
 		for(int j = 0; j < 3; ++j) {
-			res += '0' + tab[i][j].toString();
+			res += tab[i][j].toString();
 		}
 	}
 	

@@ -13,19 +13,13 @@ enum {
 };
 
 void sendPackages(Server& s, GameController& g) {
-	assert(s.sendMessage(P1, g.getBoardPackage()) == 0);
-	std::cout << "3" << std::endl;
-	assert(s.sendMessage(P1, g.getBigGamePackage()) == 0);
-	std::cout << "4" << std::endl;
-	assert(s.sendMessage(P1, g.getControlPackage(1)) == 0);
-	std::cout << "5" << std::endl;
+	assert(s.sendMessage(P1, g.getBoardPackage()));
+	assert(s.sendMessage(P1, g.getBigGamePackage()));
+	assert(s.sendMessage(P1, g.getControlPackage(1)));
 
-	assert(s.sendMessage(P2, g.getBoardPackage()) == 0);
-	std::cout << "6" << std::endl;
-	assert(s.sendMessage(P2, g.getBigGamePackage()) == 0);
-	std::cout << "7" << std::endl;
-	assert(s.sendMessage(P2, g.getControlPackage(2)) == 0);
-	std::cout << "8" << std::endl;
+	assert(s.sendMessage(P2, g.getBoardPackage()));
+	assert(s.sendMessage(P2, g.getBigGamePackage()));
+	assert(s.sendMessage(P2, g.getControlPackage(2)));
 }
 
 int main(){
@@ -34,24 +28,15 @@ int main(){
 	GameController g;
 
 	s.waitConnections();
-	
 
-
-	std::cout << "1" << std::endl;
-
-	// Manda o jogo inicial
-	sendPackages(s, g);
-
-	std::cout << "2" << std::endl;
-	
+	sendPackages(s, g);	
 
 	string msg;
 	while(true){
-		std::cout << "taqui\n";
 		msg = s.receiveMessage(P1);
 
 		if(msg == "quit"){
-			s.sendMessage(P2, "quit");
+			//s.sendMessage(P2, "quit");
 			break;
 		}
 
@@ -66,7 +51,7 @@ int main(){
 		}
 
 
-		msg = s.receiveMessage(P2);
+		/*msg = s.receiveMessage(P2);
 		if(msg == "quit"){
 			s.sendMessage(P1, "quit");
 			break;
@@ -79,7 +64,7 @@ int main(){
 		}
 		else if(msg != "" and g.isTurn(P2) == 0){
 			s.sendMessage(P2, "ENao eh sua vez");
-		}
+		}*/
 	}
 
 	return 0;

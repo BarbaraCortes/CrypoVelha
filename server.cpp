@@ -49,10 +49,14 @@ std::string Server::receiveMessage(int id) {
 // envia mensagem para o player (id)
 int Server::sendMessage(int id, std::string msg) {
 	char men[256];
+	memset(men, '\0', sizeof men);
 	
 	strcpy(men, msg.c_str());
+	
+	std::cout << "sending packet " << msg[0] << " to client " << id << " size: " << msg.size() << std::endl;
+	std::cout << "msg=" << msg << std::endl;
 
-	return send(clients[id-1], men, sizeof(men), 0); 
+	return send(clients[id-1], men, sizeof(men), 0) == 256;
 }
 
 Server::~Server(){
