@@ -28,6 +28,9 @@ public:
 	/* Checa se não ha mais posicoes para serem marcadas no BigGame */
 	bool checkFull();
 
+	/* Checa se o jogo deu velha */
+	bool checkTie();
+
 	/* Marca no tabuleiro a posicao onde o jogador decidiu jogar */
 	bool markPos(std::pair<int, int> g, std::pair<int, int> p, int player);
 
