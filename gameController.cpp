@@ -55,7 +55,7 @@ std::string GameController::getControlPackage(int toPlayer){
 		pos = '9';
 	}
 
-	if(b->checkFull() == 0) state = VELHA;
+	if(b->checkTie()) state = VELHA;
 
 	else{
 		if(b->checkWin() == 0) state = NADA;
