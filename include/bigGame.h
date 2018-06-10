@@ -7,6 +7,11 @@
 #include <string>
 
 class BigGame {
+
+private:
+	std::pair<int, int> setGame(int i, int j);
+	bool validPos(std::pair<int, int> g, std::pair<int, int> p);
+	
 public:
 	Game tab[3][3];
 	std::pair<int, int> curGame;
@@ -14,9 +19,7 @@ public:
 	BigGame();
 	int checkWin();
 	bool checkFull();
-	bool validPos(std::pair<int, int> g, std::pair<int, int> p);
-	std::pair<int, int> setGame(int i, int j);
-	void markPos(std::pair<int, int> g, std::pair<int, int> p, int player);
+	bool markPos(std::pair<int, int> g, std::pair<int, int> p, int player);
 	std::string completeGame();
 	std::string toString();
 };

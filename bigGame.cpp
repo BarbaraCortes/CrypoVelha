@@ -53,14 +53,13 @@ std::pair<int, int> BigGame::setGame(int i, int j) {
 	return std::make_pair(i, j);
 }
 
-void BigGame::markPos(std::pair<int, int> g, std::pair<int, int> p, int player) {
-	if (!validPos(g, p)) {
-		// throw std::invalid_argument( "posicao invalida" );
-	}
+bool BigGame::markPos(std::pair<int, int> g, std::pair<int, int> p, int player) {
+	if (!validPos(g, p)) return false;
 	
 	tab[g.first][g.second].mat[p.first][p.second] = player;
 	
 	curGame = setGame(p.first, p.second);
+	return true;
 }
 
 std::string BigGame::completeGame() {
