@@ -19,7 +19,7 @@ int GameController::userInput(std::string msg, int player){
 	assert(msg.size() == 4);
 
 	std::pair<int, int> g, p;
-	stringstream ss(msg);
+	std::stringstream ss(msg);
 
 	char x, y;
 	ss >> x;
@@ -37,15 +37,15 @@ int GameController::userInput(std::string msg, int player){
 	return 0; //Sem error
 }
 
-std::string getBoardPackage(){
+std::string GameController::getBoardPackage(){
 	return 'T' + b->completeGame();
 }
 
-std::string getBigGamePackage(){
+std::string GameController::getBigGamePackage(){
 	return 'B' + b->toString();
 }
 
-std::string getControlPackage(int toPlayer){
+std::string GameController::getControlPackage(int toPlayer){
 	char pos;
 	char state;
 	if(toPlayer == turn){
@@ -69,7 +69,7 @@ std::string getControlPackage(int toPlayer){
 		}
 	}
 
-	return 'C' + pos + state;
+	return "C" + pos + state;
 }
 
 
