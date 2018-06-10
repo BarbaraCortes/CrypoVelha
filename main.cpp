@@ -2,11 +2,13 @@
 #include <memory>
 #include <vector>
 #include <GL/glut.h>
+#include <sstream>
 
 #include "include/button.h"
 #include "include/textfield.h"
 #include "include/gameboard.h"
 #include "include/client.h"
+#include "include/protocol.h"
 
 GLint WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
 
@@ -26,15 +28,22 @@ struct State {
 
 	GLfloat mouseX, mouseY;
 	GLint screenW, screenH;
+	
+	GLint oldTime;
 
 	GameBoard *gameBoard;
 	Label *statusLabel;
-
+	
 	std::unique_ptr<Client> client;
+	std::unique_ptr<Protocol> protocol;
 
 	State() : screenW(WINDOW_WIDTH), screenH(WINDOW_HEIGHT), nextScreen(SCREEN_NONE), gameBoard(nullptr) { }
 
-	~State() { }
+	~State() {
+		if (client) {
+			client->sendMessage("quit");
+		}
+	}
 
 	void setNextScreen(screen_t screenId) {
 		nextScreen = screenId;
@@ -98,9 +107,14 @@ struct State {
 				gameBoard->setSelectedBlock(0, 2);
 
 				gameBoard->setCellCallback([&](GLint blockRow, GLint blockCol, GLint row, GLint col) {
-					std::cout << "clicou no jogo (" << blockRow << ", " << blockCol << ") ";
-					std::cout << "celula (" << row << ", " <<  col << ")\n";
+					//std::cout << "clicou no jogo (" << blockRow << ", " << blockCol << ") ";
+					//std::cout << "celula (" << row << ", " <<  col << ")\n";
+					std::ostringstream ss;
+					ss << blockRow << blockCol << row << col;
+					client->sendMessage(ss.str());
 				});
+				
+				protocol.reset(new Protocol(gameBoard, statusLabel));
 
 				/*Board b;
 				for (int i = 0; i < 9; i++) {
@@ -179,7 +193,7 @@ struct State {
 				std::cout << msg << std::endl;
 				std::cout << msg.size() << std::endl;
 				
-				client->sendMessage("quit");
+				protocol->parsePacket(msg);
 			}
 		}
 		
@@ -213,7 +227,7 @@ void idleFunc();
 
 int main(int argc, char* argv[]) {
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_SINGLE | GLUT_RGB);
+	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 
 	GLint screen_width = glutGet(GLUT_SCREEN_WIDTH),
 	screen_height = glutGet(GLUT_SCREEN_HEIGHT);
@@ -221,6 +235,8 @@ int main(int argc, char* argv[]) {
 	glutInitWindowPosition((screen_width - WINDOW_WIDTH) / 2, (screen_height - WINDOW_WIDTH) / 2);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_WIDTH);
 	glutCreateWindow("CryptoVelha");
+
+	gState.oldTime = glutGet(GLUT_ELAPSED_TIME);
 
 	init();
 
@@ -251,7 +267,7 @@ void displayFunc() {
 
 	gState.draw();
 	
-	glFlush();
+	glutSwapBuffers();
 }
 
 void mouseFunc(GLint button, GLint action, GLint x, GLint y) {
@@ -263,7 +279,6 @@ void mouseFunc(GLint button, GLint action, GLint x, GLint y) {
 
 void passiveFunc(GLint x, GLint y) {
 	gState.onMouseMoved(x, y);
-	glutPostRedisplay();
 }
 
 void reshapeFunc(GLint newWidth, GLint newHeight) {
@@ -275,8 +290,6 @@ void reshapeFunc(GLint newWidth, GLint newHeight) {
 	gluOrtho2D(0, 1, 0, 1);
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
-
-	glutPostRedisplay();
 }
 
 void keyboardFunc(GLubyte key, GLint x, GLint y) {
@@ -286,7 +299,13 @@ void keyboardFunc(GLubyte key, GLint x, GLint y) {
 }
 
 void idleFunc() {
+	GLint curTime = glutGet(GLUT_ELAPSED_TIME);
+	if (curTime - gState.oldTime < (1000.0 / 60)) {
+		return;
+	}
+	gState.oldTime = curTime;
+	
 	gState.update();
-
+	
 	glutPostRedisplay();
 }

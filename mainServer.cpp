@@ -36,7 +36,7 @@ int main(){
 		msg = s.receiveMessage(P1);
 
 		if(msg == "quit"){
-			//s.sendMessage(P2, "quit");
+			s.sendMessage(P2, "quit");
 			break;
 		}
 
@@ -51,7 +51,7 @@ int main(){
 		}
 
 
-		/*msg = s.receiveMessage(P2);
+		msg = s.receiveMessage(P2);
 		if(msg == "quit"){
 			s.sendMessage(P1, "quit");
 			break;
@@ -64,7 +64,7 @@ int main(){
 		}
 		else if(msg != "" and g.isTurn(P2) == 0){
 			s.sendMessage(P2, "ENao eh sua vez");
-		}*/
+		}
 	}
 
 	return 0;
