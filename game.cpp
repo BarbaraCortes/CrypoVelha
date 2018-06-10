@@ -32,3 +32,15 @@ bool Game::checkFull() {
 bool Game::validPos(int i, int j) {
 	return (mat[i][j] == 0);
 }
+
+std::string Game::toString() {
+	std::string res;
+	
+	for(int i = 0; i < 3; ++i) {
+		for(int j = 0; j < 3; ++j) {
+			res += mat[i][j];
+		}
+	}
+	
+	return res;
+}
