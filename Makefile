@@ -1,11 +1,17 @@
-LINKS = -lsfml-graphics -lsfml-system -lsfml-window
-OBJECTS = Fonts.o Button.o TextField.o
+LINKS_C = -lGL -lglut -lGLU
+LINKS_S = 
+OBJECTS_C = object.o button.o textfield.o gameboard.o label.o board.o client.o protocol.o
+OBJECTS_S = bigGame.o game.o server.o gameController.o
 
-all: $(OBJECTS)
-	g++ -o main main.cpp -std=c++0x $(OBJECTS) $(LINKS) -I./include -L./lib
-	g++ -o client client.cpp
-	g++ -o server server.cpp
+all: $(OBJECTS_C)
+	g++ -g -o main main.cpp -std=c++14 $(OBJECTS_C) $(LINKS_C) -I.
+	g++ -g -o server mainServer.cpp -std=c++14 $(OBJECTS_S) $(LINKS_S) -I.
+server: $(OBJECTS_S)
+	g++ -o server mainServer.cpp -std=c++14 $(OBJECTS_S) $(LINKS_S) -I.
+client: $(OBJECTS_C)
+	g++ -o main main.cpp -std=c++14 $(OBJECTS_C) $(LINKS_C) -I.
 %.o: %.cpp
-	g++ -o $@ -c $< -std=c++0x -I./include
+	g++ -o $@ -c $< -std=c++14 -I.
+
 clean:
 	rm *.o

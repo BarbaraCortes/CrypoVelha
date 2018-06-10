@@ -11,14 +11,18 @@ Client::Client(std::string ip, int port) {
 	servAddress.sin_family = AF_INET;
 	servAddress.sin_port = htons(port); // precisa converter o inteiro para o tipo do atributo sin_port
 	if(inet_pton(AF_INET, ip.c_str(), &servAddress.sin_addr) <= 0) {
-		printf("Erro\n");
+		std::cerr << "Erro na conexao." << std::endl;
+		sock = -1;
+		exit(0);
 	}
 }
 
 // -1: erro, 0: bacana
 int Client::createConnection() {
 	int ret = connect(sock, (struct sockaddr *) &servAddress, sizeof(servAddress));
-	if(ret == -1) printf("Erro ao conectar ao socket");
+	if (ret == -1) {
+		sock = -1;
+	}
 	return ret;
 }
 
@@ -48,5 +52,7 @@ int Client::sendMessage(std::string msg) {
 }
 
 Client::~Client(){
-	close(sock);
+	if (sock != -1) {
+		close(sock);
+	}
 }

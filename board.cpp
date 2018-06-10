@@ -1,8 +1,8 @@
-#include "include/tabuleiro.h"
+#include "include/board.h"
 
-Tabuleiro::Tabuleiro() {}
+Board::Board() : mat(), bigMat() {}
 
-Tabuleiro::Tabuleiro(std::string game, std::string bigGame) {
+Board::Board(std::string game, std::string bigGame) : mat(), bigMat() {
 	 assert(game.size() == 82);
 	 assert(bigGame.size() == 10);
 	 int cnt = 1;
