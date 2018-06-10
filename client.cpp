@@ -24,8 +24,20 @@ int Client::createConnection() {
 
 std::string Client::receiveMessage() {
 	char msg[256];
-	recv(sock, &msg, sizeof(msg), 0); // recebe a mensagem passada pelo socket
-	return std::string(msg);
+	fd_set set;
+	struct timeval timeout;
+	
+	FD_ZERO(&set);
+	FD_SET(sock, &set);
+	timeout.tv_sec = TIMEOUT_SECS;
+	timeout.tv_usec = TIMEOUT_USECS;
+	
+	int rv = select(sock + 1, &set, NULL, NULL, &timeout);
+	if(rv == 0) return "";
+	else {
+		recv(sock, &msg, sizeof(msg), 0); // recebe a mensagem passada pelo socket
+		return std::string(msg);
+	}
 }
 
 

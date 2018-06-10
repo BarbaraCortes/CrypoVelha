@@ -12,6 +12,9 @@
 #include <arpa/inet.h>
 #include <unistd.h>
 
+#define TIMEOUT_SECS 0
+#define TIMEOUT_USECS 500
+
 class Client {
 public:
 	int sock;
