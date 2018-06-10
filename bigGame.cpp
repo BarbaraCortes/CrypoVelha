@@ -1,5 +1,6 @@
 #include "include/bigGame.h"
 #include <time.h>
+#include <cstdlib>
 
 BigGame::BigGame() {
 	// o primeiro jogador devera jogar em um game definido aleatoriamente
@@ -77,7 +78,7 @@ bool BigGame::markPos(std::pair<int, int> g, std::pair<int, int> p, int player) 
 	return true;
 }
 
-bool checkTie() {
+bool BigGame::checkTie() {
 	// se ninguem tiver ganhado mas nao ha mais onde jogar deu velha
 	return (checkFull() && !checkWin());
 }

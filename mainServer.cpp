@@ -1,14 +1,14 @@
 #include <bits/stdc++.h>
 #include "include/server.h"
 #include "include/client.h"
-
+#include "include/gameController.h"
 using namespace std;
 
 
 int main(){
 	int ret;
 	Server *s = new Server(2, 5555);
-	unique_ptr<GameController> g = new GameController();
+	GameController *g = new GameController();
 
 	s->waitConnections();
 

@@ -16,6 +16,7 @@ public:
 	std::string getBoardPackage();
 	std::string getBigGamePackage();
 	std::string getControlPackage(int toPlayer);
+	bool isTurn(int p);
 
 };
 

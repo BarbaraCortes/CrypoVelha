@@ -72,4 +72,7 @@ std::string GameController::getControlPackage(int toPlayer){
 	return "C" + pos + state;
 }
 
+bool GameController::isTurn(int p) {
+	return turn == p;
+}
 
