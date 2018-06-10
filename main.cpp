@@ -22,6 +22,8 @@ struct State {
 	screen_t currentScreen;
 	screen_t nextScreen;
 
+	std::vector<std::unique_ptr<Object>> toAddObjects;
+
 	GLfloat mouseX, mouseY;
 	GLint screenW, screenH;
 
@@ -32,6 +34,10 @@ struct State {
 
 	State() : screenW(WINDOW_WIDTH), screenH(WINDOW_HEIGHT), nextScreen(SCREEN_NONE), gameBoard(nullptr) { }
 
+	~State() {
+		std::cout << "caboo" << std::endl;
+	}
+
 	void setNextScreen(screen_t screenId) {
 		nextScreen = screenId;
 	}
@@ -40,11 +46,12 @@ struct State {
 		client.reset(new Client(ip, 5555));
 
 		if (client->createConnection() != 0) {
-			std::cout << "deu ruim\n";
-			statusLabel = new Label("Nao foi possivel conectar a esse ip.");
+			client.reset();
+
+			statusLabel = new Label("Nao foi possivel conectar a " + ip + ":5555");
 			statusLabel->setCoordinates(0.0, 0.92, 1.0, 0.08);
 
-			objects.emplace_back(statusLabel);
+			toAddObjects.emplace_back(statusLabel);
 		} else {
 			std::cout << "deu bom\n";
 		}
@@ -128,6 +135,11 @@ struct State {
 		GLfloat mX = x / (1.0 * screenW);
 		GLfloat mY = 1.0 - y / (1.0 * screenH);
 
+		for (auto& obj : toAddObjects) {
+			objects.emplace_back(obj.release());	
+		}
+		toAddObjects.clear();
+
 		for (auto& obj : objects) {
 			if (obj->isInside(mX, mY)) {
 				obj->onClick(mX, mY);
@@ -145,6 +157,11 @@ struct State {
 			obj->onKeyPressed(key);
 		}
 
+		for (auto& obj : toAddObjects) {
+			objects.emplace_back(obj.release());	
+		}
+		toAddObjects.clear();
+
 		if (nextScreen != SCREEN_NONE) {
 			setScreen(nextScreen);
 			setNextScreen(SCREEN_NONE);
@@ -158,6 +175,11 @@ struct State {
 	}
 
 	void update() {
+		for (auto& obj : toAddObjects) {
+			objects.emplace_back(obj.release());	
+		}
+		toAddObjects.clear();
+
 		if (currentScreen == SCREEN_GAME) {
 			if (gameBoard->isFinished()) {
 				setNextScreen(SCREEN_HOME);

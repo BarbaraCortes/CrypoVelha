@@ -52,9 +52,12 @@ int Server::sendMessage(int id, std::string msg) {
 	
 	strcpy(men, msg.c_str());
 	
+	std::cout << "sending " << msg << " to id " << id << std::endl;
+
 	return send(clients[id-1], men, sizeof(men), 0); 
 }
 
 Server::~Server(){
+	std::cout << "closing the socket connection." << std::endl;
 	close(sock);
 }
