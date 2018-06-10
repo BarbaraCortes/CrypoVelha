@@ -34,9 +34,7 @@ struct State {
 
 	State() : screenW(WINDOW_WIDTH), screenH(WINDOW_HEIGHT), nextScreen(SCREEN_NONE), gameBoard(nullptr) { }
 
-	~State() {
-		std::cout << "caboo" << std::endl;
-	}
+	~State() { }
 
 	void setNextScreen(screen_t screenId) {
 		nextScreen = screenId;
@@ -52,8 +50,6 @@ struct State {
 			statusLabel->setCoordinates(0.0, 0.92, 1.0, 0.08);
 
 			toAddObjects.emplace_back(statusLabel);
-		} else {
-			std::cout << "deu bom\n";
 		}
 	}
 
@@ -175,6 +171,15 @@ struct State {
 	}
 
 	void update() {
+		if (client) {
+			std::string msg = client->receiveMessage();
+			if (!msg.empty()) {
+				std::cout << msg << std::endl;
+				
+				client->sendMessage("quit");
+			}
+		}
+		
 		for (auto& obj : toAddObjects) {
 			objects.emplace_back(obj.release());	
 		}
