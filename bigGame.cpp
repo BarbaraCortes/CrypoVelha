@@ -1,7 +1,9 @@
 #include "include/bigGame.h"
+#include <time.h>
 
 BigGame::BigGame() {
-	curGame = std::make_pair(-1, -1);
+	srand(time(NULL));
+	curGame = std::make_pair(rand()%8, rand()%8);
 }
 
 int BigGame::checkWin() {
@@ -35,7 +37,7 @@ bool BigGame::checkFull() {
 }
 
 bool BigGame::validPos(std::pair<int, int> g, std::pair<int, int> p) {
-	return ((g == curGame || curGame == std::make_pair(-1, -1)) && tab[g.first][g.second].validPos(p.first, p.second));
+	return (g == curGame && tab[g.first][g.second].validPos(p.first, p.second));
 }
 
 std::pair<int, int> BigGame::setGame(int i, int j) {
@@ -67,7 +69,7 @@ std::string BigGame::completeGame() {
 	
 	for(int i = 0; i < 3; ++i) {
 		for(int j = 0; j < 3; ++j) {
-			res += tab[i][j].toString();
+			res += '0' + tab[i][j].toString();
 		}
 	}
 	
@@ -79,9 +81,13 @@ std::string BigGame::toString() {
 	
 	for(int i = 0; i < 3; ++i) {
 		for(int j = 0; j < 3; ++j) {
-			res += tab[i][j].checkWin();
+			res += '0' + tab[i][j].checkWin();
 		}
 	}
 	
 	return res;
+}
+
+int BigGame::getCurPos() {
+	return curGame.first * 3 + curGame.second;
 }

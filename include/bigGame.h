@@ -22,6 +22,7 @@ public:
 	bool markPos(std::pair<int, int> g, std::pair<int, int> p, int player);
 	std::string completeGame();
 	std::string toString();
+	int getCurPos();
 };
 
 
