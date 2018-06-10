@@ -5,13 +5,13 @@
 #include "include/textfield.h"
 
 TextField::TextField(std::string t, std::function<void(std::string)> h) : text(t), handler(h), Object(0.1, 0.1, 0.4, 0.2) {
-
+	minSize = 4, maxSize = 19;
 }
 
 void TextField::onKeyPressed(GLubyte key) {
 	switch (key) {
 		case 8:
-			if (text.size() > minSize) text.pop_back();
+			if (text.size() > minSize) text = text.substr(text.size()-1);
 			break;
 		case 13:
 			handler(text);

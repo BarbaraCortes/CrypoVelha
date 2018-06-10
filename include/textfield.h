@@ -10,7 +10,7 @@ private:
 	std::string text;
 	std::function<void(std::string)> handler;
 
-	size_t minSize = 4, maxSize = 19;
+	size_t minSize, maxSize;
 
 public:	
 
