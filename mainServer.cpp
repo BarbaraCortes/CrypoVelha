@@ -4,6 +4,20 @@
 #include "include/gameController.h"
 using namespace std;
 
+enum {
+	P1 = 1,
+	P2
+};
+
+void sendPackages(Server * s, GameController * g) {
+	s->sendMessage(P1, g->getBoardPackage());
+	s->sendMessage(P1, g->getBigGamePackage());
+	s->sendMessage(P1, g->getControlPackage(1));
+
+	s->sendMessage(P2, g->getBoardPackage());
+	s->sendMessage(P2, g->getBigGamePackage());
+	s->sendMessage(P2, g->getControlPackage(2));
+}
 
 int main(){
 	int ret;
@@ -11,53 +25,43 @@ int main(){
 	GameController *g = new GameController();
 
 	s->waitConnections();
-
+	
+	// Manda o jogo inicial
+	sendPackages(s, g);
+	
 	string msg;
 	while(true){
-		msg = s->receiveMessage(0);
-
-		if(msg == "quit"){
-			s->sendMessage(1, "quit");
-			break;
-		}
-
-		if(msg != "" and g->isTurn(1)){
-			ret = g->userInput(msg, 1);
-			if(ret == 1) s->sendMessage(0, "EPosicao invalida");
-			else{
-				s->sendMessage(0, g->getBoardPackage());
-				s->sendMessage(0, g->getBigGamePackage());
-				s->sendMessage(0, g->getControlPackage(1));
-
-				s->sendMessage(1, g->getBoardPackage());
-				s->sendMessage(1, g->getBigGamePackage());
-				s->sendMessage(1, g->getControlPackage(2));
-			}
-		}
-
-		else if(g->isTurn(1) == 1){
-			s->sendMessage(0, "ENao eh sua vez");
-		}
-
-
 		msg = s->receiveMessage(1);
+
 		if(msg == "quit"){
-			s->sendMessage(0, "quit");
+			s->sendMessage(P2, "quit");
 			break;
 		}
 
-		if(msg != "" and g->isTurn(2)){
-			ret = g->userInput(msg, 2);
-			if(ret == 1) s->sendMessage(1, "EPosicao invalida");
-			else{
-				s->sendMessage(0, g->getBoardPackage());
-				s->sendMessage(0, g->getBigGamePackage());
-				s->sendMessage(0, g->getControlPackage(1));
+		if(msg != "" and g->isTurn(P1)){
+			ret = g->userInput(msg, P1);
+			if(ret == 1) s->sendMessage(P1, "EPosicao invalida");
+			else sendPackages(s, g);
+		}
 
-				s->sendMessage(1, g->getBoardPackage());
-				s->sendMessage(1, g->getBigGamePackage());
-				s->sendMessage(1, g->getControlPackage(2));
-			}
+		else if(msg != "" and g->isTurn(P1) == 0){
+			s->sendMessage(P1, "ENao eh sua vez");
+		}
+
+
+		msg = s->receiveMessage(P1);
+		if(msg == "quit"){
+			s->sendMessage(P1, "quit");
+			break;
+		}
+
+		if(msg != "" and g->isTurn(P2)){
+			ret = g->userInput(msg, P2);
+			if(ret == 1) s->sendMessage(P2, "EPosicao invalida");
+			else sendPackages(s, g);
+		}
+		else if(msg != "" and g->isTurn(P2) == 0){
+			s->sendMessage(P2, "ENao eh sua vez");
 		}
 	}
 

@@ -31,16 +31,16 @@ std::string Server::receiveMessage(int id) {
 	struct timeval timeout;
 	
 	FD_ZERO(&set);
-	FD_SET(clients[id], &set);
+	FD_SET(clients[id-1], &set);
 	timeout.tv_sec = TIMEOUT_SECS;
 	timeout.tv_usec = TIMEOUT_USECS;
-	int rv = select(clients[id] + 1, &set, NULL, NULL, &timeout);
+	int rv = select(clients[id-1] + 1, &set, NULL, NULL, &timeout);
 	if(rv == 0) {
 		//printf("Timeout\n");
 		return "";
 	}
 	else{
-		recv(clients[id], &msg, sizeof(msg), 0); // recebe a mensagem passada pelo socket
+		recv(clients[id-1], &msg, sizeof(msg), 0); // recebe a mensagem passada pelo socket
 		//printf("The client1 sent data: %s\n", msg);
 		return std::string(msg);
 	}
@@ -52,7 +52,7 @@ int Server::sendMessage(int id, std::string msg) {
 	
 	strcpy(men, msg.c_str());
 	
-	return send(clients[id], men, sizeof(men), 0); 
+	return send(clients[id-1], men, sizeof(men), 0); 
 }
 
 Server::~Server(){
