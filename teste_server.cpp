@@ -18,12 +18,18 @@ int main(){
 			//s->sendMessage(1, msg);
 		} 
 
+		if(msg == "quit") break;
+
 		msg = s->receiveMessage(1);
 		if(msg != ""){
 			cout << "Client 1 sent: " + msg << endl;
 			//s->sendMessage(0, msg);
 		} 
+
+		if(msg == "quit") break;
 	}
+
+	delete s;
 
 	return 0;
 

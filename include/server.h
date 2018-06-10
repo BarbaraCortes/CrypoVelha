@@ -10,9 +10,10 @@
 #include <sys/socket.h>
 #include <sys/select.h>
 #include <netinet/in.h> /* Necessario para a conexao do socket -> criacao de enderecos (adress e port) do socket que queremos conectar */
+#include <unistd.h>
 
-#define TIMEOUT_SECS 1
-#define TIMEOUT_USECS 0
+#define TIMEOUT_SECS 0
+#define TIMEOUT_USECS 500
 
 class Server {
 public:
@@ -24,6 +25,8 @@ public:
 	void waitConnections();
 	std::string receiveMessage(int id); // id do socket
 	int sendMessage(int id, std::string msg); // envia mensagem para o player (id)
+
+	~Server();
 };
 
 #endif

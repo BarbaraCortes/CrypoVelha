@@ -34,3 +34,7 @@ int Client::sendMessage(std::string msg) {
 	strcpy(men, msg.c_str());
 	return send(sock, men, sizeof(men), 0); 
 }
+
+Client::~Client(){
+	close(sock);
+}

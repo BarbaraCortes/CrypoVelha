@@ -10,6 +10,7 @@
 #include <sys/select.h>
 #include <netinet/in.h> /* Necessario para a conexao do socket -> criacao de enderecos (adress e port) do socket que queremos conectar */
 #include <arpa/inet.h>
+#include <unistd.h>
 
 class Client {
 public:
@@ -22,6 +23,7 @@ public:
 	int createConnection(); //retorna se houve erro
 	std::string receiveMessage();
 	int sendMessage(std::string msg);
+	~Client();
 };
 
 #endif

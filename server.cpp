@@ -36,12 +36,12 @@ std::string Server::receiveMessage(int id) {
 	timeout.tv_usec = TIMEOUT_USECS;
 	int rv = select(clients[id] + 1, &set, NULL, NULL, &timeout);
 	if(rv == 0) {
-		printf("Timeout\n");
+		//printf("Timeout\n");
 		return "";
 	}
 	else{
 		recv(clients[id], &msg, sizeof(msg), 0); // recebe a mensagem passada pelo socket
-		printf("The client1 sent data: %s\n", msg);
+		//printf("The client1 sent data: %s\n", msg);
 		return std::string(msg);
 	}
 }
@@ -53,4 +53,8 @@ int Server::sendMessage(int id, std::string msg) {
 	strcpy(men, msg.c_str());
 	
 	return send(clients[id], men, sizeof(men), 0); 
+}
+
+Server::~Server(){
+	close(sock);
 }
