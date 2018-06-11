@@ -53,6 +53,6 @@ int Client::sendMessage(std::string msg) {
 
 Client::~Client(){
 	if (sock != -1) {
-		close(sock);
+		::close(sock);
 	}
 }
