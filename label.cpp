@@ -1,5 +1,5 @@
 #include <iostream>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 #include "include/label.h"
 

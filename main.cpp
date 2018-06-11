@@ -1,7 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <vector>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include <sstream>
 
 #include "include/button.h"

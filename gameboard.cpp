@@ -1,7 +1,7 @@
 #include <memory>
 #include <iostream>
 #include <cmath>
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 
 #include "include/gameboard.h"
 

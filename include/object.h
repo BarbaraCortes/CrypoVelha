@@ -1,7 +1,7 @@
 #ifndef OBJECT_H
 #define OBJECT_H
 
-#include <GL/glut.h>
+#include <GLUT/glut.h>
 #include <iostream>
 #include <functional>
 
