@@ -35,6 +35,8 @@ int BigGame::checkWin() {
 }
 
 bool BigGame::checkFull() {
+	if (checkWin()) return true;
+	
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			// ainda se pode jogar nesse game por ha posicoes vazias e ninguem o ganhou

@@ -25,6 +25,8 @@ int Game::checkWin() {
 }
 
 bool Game::checkFull() {
+	if (checkWin()) return true;
+	
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			// ainda ha posicao a ser marcada

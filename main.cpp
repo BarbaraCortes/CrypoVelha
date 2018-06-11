@@ -190,7 +190,6 @@ struct State {
 		if (client) {
 			std::string msg = client->receiveMessage();
 			if (!msg.empty()) {
-				std::cout << msg << std::endl;
 				if (msg == "quit") {
 					client.reset();
 					statusLabel->setText("Status: conexao fechada");

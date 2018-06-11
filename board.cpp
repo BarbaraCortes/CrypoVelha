@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "include/board.h"
 
 Board::Board() : mat(), bigMat() {}
@@ -15,10 +17,14 @@ Board::Board(std::string game, std::string bigGame) : mat(), bigMat() {
 		 }
 	 }
 	 
+	 std::cout << bigGame << std::endl;
+	 
 	 cnt = 0;
 	 for(int i = 0; i < 3; ++i) {
 		 for(int j = 0; j < 3; ++j) {
 			 bigMat[i][j] = bigGame[cnt++] - '0';
 		 }
 	 }
+	 
+	 std::cout << bigMat[0][0] << std::endl;
 }

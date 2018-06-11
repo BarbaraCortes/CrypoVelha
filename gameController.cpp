@@ -18,6 +18,9 @@ GameController::GameController(){
 
 int GameController::userInput(std::string msg, int player){
 	if(turn != player) return -1; //Não é sua vez
+	if (b->checkFull()) {
+		return 1;
+	}
 
 	assert(msg.size() == 4);
 
@@ -29,12 +32,9 @@ int GameController::userInput(std::string msg, int player){
 	ss >> y;
 	g = std::make_pair((int)(x-'0'), (int)(y-'0'));
 
-	std::cout << "recebeu " << x << " " << y << " : ";
-
 	ss >> x;
 	ss >> y;
 	p = std::make_pair((int)(x-'0'), (int)(y-'0'));
-	std::cout << x << " " << y << "\n";
 
 	if(!b->markPos(g, p, player)) return 1; //Posicao invalida
 
