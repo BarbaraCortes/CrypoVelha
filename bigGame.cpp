@@ -1,5 +1,6 @@
 #include "include/bigGame.h"
 #include <time.h>
+#include <cstdio>
 #include <cstdlib>
 
 BigGame::BigGame() {

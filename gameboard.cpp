@@ -86,7 +86,7 @@ void GameBoard::draw(GLfloat x, GLfloat y, GLint screenW, GLint screenH) {
 			}
 			glLineWidth(1.0);
 			if (board.bigMat[i][j]) {
-				drawMark(!(board.bigMat[i][j] - 1), posX + i * (sizeW / 3.0), posY - j * (sizeH / 3.0), sizeW / 3.0, sizeH / 3.0, screenW, screenH);
+				drawMark(!(board.bigMat[i][j] - 1), posX + j * (sizeW / 3.0), posY - i * (sizeH / 3.0), sizeW / 3.0, sizeH / 3.0, screenW, screenH);
 			} else {
 				drawBoard(posX + j * (sizeW / 3.0), posY - i * (sizeH / 3.0), sizeW / 3.0, sizeH / 3.0, screenW, screenH);
 			}

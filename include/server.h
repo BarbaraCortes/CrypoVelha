@@ -31,7 +31,14 @@ public:
 	std::string receiveMessage(int id); // id do socket
 
 	/* Envia uma mensagem para o player [id] e retorna se houve erro */
-	int sendMessage(int id, std::string msg); 
+	int sendMessage(int id, std::string msg);
+	
+	void close() {
+		for (int c : clients) {
+			::close(c);
+		}
+		::close(sock);
+	}
 
 	/* Destrutor de um servidor */
 	~Server();

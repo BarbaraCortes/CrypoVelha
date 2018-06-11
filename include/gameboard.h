@@ -46,7 +46,11 @@ public:
 	}
 
 	void setBoard(Board b) {
-		board = b;
+		for (int i = 0; i < 9; i++) {
+			for (int j = 0; j < 9; j++) {
+				board.mat[i][j] = b.mat[i][j];
+			}
+		}
 	}
 };
 

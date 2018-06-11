@@ -99,7 +99,7 @@ struct State {
 				objects.emplace_back(ipTextField);
 				break;
 			case SCREEN_GAME:
-				statusLabel = new Label("Status: ");
+				statusLabel = new Label("Status: aguardando host");
 				statusLabel->setCoordinates(0.0, 0.92, 1.0, 0.08);
 
 				gameBoard = new GameBoard();
@@ -191,9 +191,12 @@ struct State {
 			std::string msg = client->receiveMessage();
 			if (!msg.empty()) {
 				std::cout << msg << std::endl;
-				std::cout << msg.size() << std::endl;
-				
-				protocol->parsePacket(msg);
+				if (msg == "quit") {
+					client.reset();
+					statusLabel->setText("Status: conexao fechada");
+				} else {
+					protocol->parsePacket(msg);
+				}				
 			}
 		}
 		

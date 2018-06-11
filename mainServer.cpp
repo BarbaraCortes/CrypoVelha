@@ -67,6 +67,8 @@ int main(){
 		}
 	}
 
+	s.close();
+
 	return 0;
 
 }

@@ -25,7 +25,6 @@ void Protocol::parsePacket(std::string msg) {
 void Protocol::parseBoard(std::string msg) {
 	board = msg;
 	if (bigGame.size()) {
-		std::cout << "setboard\n";
 		gameBoard->setBoard(Board(board, bigGame));
 	}
 }
@@ -33,7 +32,6 @@ void Protocol::parseBoard(std::string msg) {
 void Protocol::parseBigGame(std::string msg) {
 	bigGame = msg;
 	if (board.size()) {
-		std::cout << "setboard\n";
 		gameBoard->setBoard(Board(board, bigGame));
 	}
 }

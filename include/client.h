@@ -36,6 +36,11 @@ public:
 
 	/* Destrutor de um cliente */
 	~Client();
+	
+	void close() {
+		::close(sock);
+		sock = -1;
+	}
 };
 
 #endif

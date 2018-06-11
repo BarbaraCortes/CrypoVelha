@@ -60,8 +60,5 @@ int Server::sendMessage(int id, std::string msg) {
 }
 
 Server::~Server(){
-	for (int c : clients) {
-		close(c);
-	}
-	close(sock);
+	
 }
