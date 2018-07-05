@@ -1,7 +1,7 @@
 #ifndef GAME_CONTROLLER
 #define GAME_CONTROLLER
 
-#include "include/bigGame.h"
+#include "bigGame.h"
 #include <sstream>
 #include <string>
 
