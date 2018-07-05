@@ -3,8 +3,8 @@
 
 #include <string>
 
-#include "include/gameboard.h"
-#include "include/label.h"
+#include "gameboard.h"
+#include "label.h"
 
 class Protocol {
 protected:
