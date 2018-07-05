@@ -2,7 +2,7 @@
 #define BIGGAME_H
 
 #include <utility>
-#include "include/game.h"
+#include "game.h"
 #include <cstring>
 #include <string>
 
